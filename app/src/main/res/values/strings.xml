@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TinkoffFintech2024Lab</string>
+    <string name="button_popular_text">Популярные</string>
+    <string name="button_favourites_text">Избранное</string>
+    <string name="fragment_popular_films_label">Популярные</string>
+    <string name="fragment_favourite_films_label">Избранное</string>
 </resources>

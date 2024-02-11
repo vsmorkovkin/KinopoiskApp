@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation_graph"
+    app:startDestination="@id/popularFilmsFragment">
+
+    <fragment
+        android:id="@+id/popularFilmsFragment"
+        android:name="com.example.tinkofffintech2024lab.presentation.popularfilms.PopularFilmsFragment"
+        android:label="@string/fragment_popular_films_label"
+        tools:layout="@layout/fragment_popular_films" >
+        <action
+            android:id="@+id/action_popularFilmsFragment_to_filmDetailsFragment"
+            app:destination="@id/filmDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouriteFilmsFragment"
+        android:name="com.example.tinkofffintech2024lab.presentation.favouritefilms.FavouriteFilmsFragment"
+        android:label="@string/fragment_favourite_films_label"
+        tools:layout="@layout/fragment_favourite_films" >
+        <action
+            android:id="@+id/action_favouriteFilmsFragment_to_filmDetailsFragment"
+            app:destination="@id/filmDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/filmDetailsFragment"
+        android:name="com.example.tinkofffintech2024lab.presentation.filmdetails.FilmDetailsFragment"
+        android:label="fragment_film_details"
+        tools:layout="@layout/fragment_film_details" />
+
+</navigation>
