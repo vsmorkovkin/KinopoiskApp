@@ -4,4 +4,6 @@
     <string name="button_favourites_text">Избранное</string>
     <string name="fragment_popular_films_label">Популярные</string>
     <string name="fragment_favourite_films_label">Избранное</string>
+    <string name="film_item_title_sample">Title</string>
+    <string name="film_item_genre_year_sample">Genre(year)</string>
 </resources>
