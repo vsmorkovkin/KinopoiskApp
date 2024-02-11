@@ -6,7 +6,7 @@ import com.example.domain.entity.SearchParam
 
 interface FilmRepository {
 
-    fun getPopularFilms(): List<Film>
+    suspend fun getPopularFilms(): List<Film>
 
     fun updateFavouriteStatus(film: Film): Boolean
 

@@ -7,7 +7,7 @@ class GetPopularFilmsUseCase(
     private val filmRepository: FilmRepository
 ) {
 
-    fun execute(): List<Film> {
+    suspend fun execute(): List<Film> {
         return filmRepository.getPopularFilms()
     }
 
