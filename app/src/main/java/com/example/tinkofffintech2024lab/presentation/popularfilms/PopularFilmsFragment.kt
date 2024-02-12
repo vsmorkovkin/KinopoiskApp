@@ -35,8 +35,11 @@ class PopularFilmsFragment : Fragment() {
 
             // recyclerView settings
             val adapter = PopularFilmsRecyclerViewAdapter(
-                {
-                    findNavController().navigate(R.id.action_popularFilmsFragment_to_filmDetailsFragment)
+                { film ->
+                    val action = PopularFilmsFragmentDirections.actionPopularFilmsFragmentToFilmDetailsFragment(
+                        filmId = film.id
+                    )
+                    findNavController().navigate(action)
                 },
                 { film ->
                     popularFilmsViewModel.updateFilmFavouriteStatus(film)

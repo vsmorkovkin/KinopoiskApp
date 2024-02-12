@@ -8,4 +8,10 @@
     <string name="film_item_genre_year_sample">Genre(year)</string>
     <string name="button_retry_text">Повторить</string>
     <string name="no_connection_text">Произошла ошибка при загрузке данных, проверьте подключение к сети</string>
+    <string name="film_details_title_template">Изгой-один: Звёздные войны</string>
+    <string name="film_details_description_template">Сопротивление собирает отряд для выполнения особой миссии - надо выкрасть чертежи самого совершенного и мертоносного оружия Империи. Не всем суждено вернуться домой, но герои готовы к этому, ведь на кону судьба Галактики</string>
+    <string name="film_details_countries_template">Страны: США</string>
+    <string name="film_details_genres_template">Жанры: фантастика, приключения</string>
+    <string name="film_details_genres">Жанры: %s</string>
+    <string name="film_details_countries">Страны: %s</string>
 </resources>

@@ -1,14 +1,14 @@
 package com.example.domain.usecase
 
-import com.example.domain.entity.Film
 import com.example.domain.entity.FilmDetails
+import com.example.domain.entity.SearchByIdParam
 import com.example.domain.repository.FilmRepository
 
 class GetFilmInfoUseCase(
     private val filmRepository: FilmRepository
 ) {
 
-    fun execute(film: Film): FilmDetails {
+    suspend fun execute(film: SearchByIdParam): FilmDetails {
         return filmRepository.getFilmInfo(film)
     }
 

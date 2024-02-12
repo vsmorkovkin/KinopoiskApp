@@ -29,8 +29,14 @@
     <fragment
         android:id="@+id/filmDetailsFragment"
         android:name="com.example.tinkofffintech2024lab.presentation.filmdetails.FilmDetailsFragment"
-        android:label="fragment_film_details"
-        tools:layout="@layout/fragment_film_details" />
+        tools:layout="@layout/fragment_film_details" >
+        <argument
+            android:name="filmId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_filmDetailsFragment_to_unavailableNetworkFragment"
+            app:destination="@id/unavailableNetworkFragment" />
+    </fragment>
     <fragment
         android:id="@+id/unavailableNetworkFragment"
         android:name="com.example.tinkofffintech2024lab.presentation.unavailablenetwork.UnavailableNetworkFragment"

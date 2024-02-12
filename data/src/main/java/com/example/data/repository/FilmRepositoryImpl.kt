@@ -5,6 +5,7 @@ import com.example.data.datasource.local.model.FilmEntity
 import com.example.data.datasource.remote.RemoteFilmsDataSource
 import com.example.domain.entity.Film
 import com.example.domain.entity.FilmDetails
+import com.example.domain.entity.SearchByIdParam
 import com.example.domain.entity.SearchParam
 import com.example.domain.repository.FilmRepository
 import java.util.Locale
@@ -39,8 +40,16 @@ class FilmRepositoryImpl(
         return true
     }
 
-    override fun getFilmInfo(film: Film): FilmDetails {
-        TODO("Not yet implemented")
+    override suspend fun getFilmInfo(searchByIdParam: SearchByIdParam): FilmDetails {
+        val filmInfo = remoteFilmsDataSource.getFilmInfoById(searchByIdParam.filmId)
+
+        return FilmDetails(
+            title = filmInfo.nameRu ?: filmInfo.nameEn ?: filmInfo.nameOriginal,
+            description = filmInfo.description ?: filmInfo.shortDescription,
+            countries = filmInfo.countries.map { countryApiModel -> countryApiModel.country },
+            genres = filmInfo.genres.map { genresApiModel -> genresApiModel.genre },
+            imageUrl = filmInfo.posterUrl
+        )
     }
 
     override fun getFilmsByKeyword(searchParam: SearchParam): List<Film> {

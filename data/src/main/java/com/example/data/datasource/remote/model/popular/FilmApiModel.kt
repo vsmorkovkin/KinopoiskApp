@@ -1,4 +1,7 @@
-package com.example.data.datasource.remote.model
+package com.example.data.datasource.remote.model.popular
+
+import com.example.data.datasource.remote.model.base.CountryApiModel
+import com.example.data.datasource.remote.model.base.GenreApiModel
 
 data class FilmApiModel(
     val countries: List<CountryApiModel>,

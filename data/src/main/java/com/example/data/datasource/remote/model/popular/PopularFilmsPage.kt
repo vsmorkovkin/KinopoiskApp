@@ -1,4 +1,4 @@
-package com.example.data.datasource.remote.model
+package com.example.data.datasource.remote.model.popular
 
 data class PopularFilmsPage(
     val pageCount: Int,

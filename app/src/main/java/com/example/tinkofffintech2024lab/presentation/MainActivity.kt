@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             // hide button when move to FilmDetailsFragment
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 if (destination.id == R.id.filmDetailsFragment || destination.id == R.id.unavailableNetworkFragment) {
+                    toolbar.title = ""
                     buttonPopularFilms.visibility = View.GONE
                     buttonFavouriteFilms.visibility = View.GONE
                 } else {

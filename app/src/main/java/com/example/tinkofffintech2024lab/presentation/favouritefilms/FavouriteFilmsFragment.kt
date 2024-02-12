@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.tinkofffintech2024lab.R
 import com.example.tinkofffintech2024lab.databinding.FragmentFavouriteFilmsBinding
 import com.example.tinkofffintech2024lab.presentation.favouritefilms.adapter.FavouriteFilmsRecyclerViewAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,8 +33,9 @@ class FavouriteFilmsFragment : Fragment() {
         binding.apply {
             // recyclerView settings
             val adapter = FavouriteFilmsRecyclerViewAdapter(
-                {
-                    findNavController().navigate(R.id.action_favouriteFilmsFragment_to_filmDetailsFragment)
+                { film ->
+                    val action = FavouriteFilmsFragmentDirections.actionFavouriteFilmsFragmentToFilmDetailsFragment(filmId = film.id)
+                    findNavController().navigate(action)
                 },
                 { film ->
                     favouriteFilmsViewModel.updateFavouriteFilmStatus(film)

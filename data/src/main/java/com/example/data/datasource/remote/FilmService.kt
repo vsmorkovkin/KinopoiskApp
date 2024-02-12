@@ -1,8 +1,10 @@
 package com.example.data.datasource.remote
 
-import com.example.data.datasource.remote.model.PopularFilmsPage
+import com.example.data.datasource.remote.model.details.FilmDetailsApiModel
+import com.example.data.datasource.remote.model.popular.PopularFilmsPage
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -22,5 +24,10 @@ interface FilmService {
         @Query(QUERY_PARAM_PAGE) page: Int = 1
     ): PopularFilmsPage
 
+    @Headers("X-API-KEY: $API_KEY")
+    @GET("v2.2/films/{filmId}")
+    suspend fun getFilmInfoById(
+        @Path("filmId") filmId: Int
+    ) : FilmDetailsApiModel
 
 }
