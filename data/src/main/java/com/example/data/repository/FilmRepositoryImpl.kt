@@ -16,10 +16,10 @@ class FilmRepositoryImpl(
         val popularFilmsPage = remoteFilmsDataSource.getPopularFilms()
 
         return popularFilmsPage.films.map { filmApiModel ->  Film(
-            title = filmApiModel.title,
-            genre = "",
-            year = 0,
-            imageUrl = "",
+            title = filmApiModel.nameRu ?: filmApiModel.nameEn,
+            genre = filmApiModel.genres[0].genre,
+            year = filmApiModel.year.toInt(),
+            imageUrl = "imageUrl",
             inFavourites = false
         ) }
     }

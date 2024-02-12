@@ -5,15 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.domain.entity.Film
+import com.example.tinkofffintech2024lab.R
 import com.example.tinkofffintech2024lab.databinding.FragmentPopularFilmsBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class PopularFilmsFragment : Fragment() {
 
     private var _binding: FragmentPopularFilmsBinding? = null
     private val binding get() = _binding!!
+
+    private val popularFilmsViewModel by viewModel<PopularFilmsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,21 +32,23 @@ class PopularFilmsFragment : Fragment() {
 
         binding.apply {
 
-            val filmList = mutableListOf<Film>()
-            for (i in 0..5) {
-                filmList.add(Film(
-                    title = "Title$i",
-                    genre = "Genre",
-                    year = 2020 + i,
-                    imageUrl = "",
-                    inFavourites = false
-                ))
+            // recyclerView settings
+            val adapter = PopularFilmsRecyclerViewAdapter {
+                findNavController().navigate(R.id.action_popularFilmsFragment_to_filmDetailsFragment)
             }
-            recyclerViewPopularFilms.adapter = PopularFilmsRecyclerViewAdapter(filmList)
+            recyclerViewPopularFilms.adapter = adapter
             val linearLayoutManager = LinearLayoutManager(this@PopularFilmsFragment.context)
             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
             recyclerViewPopularFilms.layoutManager = linearLayoutManager
             recyclerViewPopularFilms.setHasFixedSize(true)
+
+            // set adapter's list when new list fetched
+            popularFilmsViewModel.filmsList.observe(viewLifecycleOwner) { newList ->
+                adapter.setFilmList(newList)
+            }
+
+            // fetch popular films
+            popularFilmsViewModel.getPopularFilms()
         }
 
     }
@@ -51,4 +57,5 @@ class PopularFilmsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

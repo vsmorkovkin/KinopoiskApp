@@ -9,8 +9,16 @@ import com.example.domain.entity.Film
 import com.example.tinkofffintech2024lab.databinding.FilmItemBinding
 
 class PopularFilmsRecyclerViewAdapter(
-    private val filmList: List<Film>
+    private val clickListener: (film: Film) -> Unit
 ) : RecyclerView.Adapter<PopularFilmsRecyclerViewAdapter.PopularFilmsViewHolder>() {
+
+    private var filmList = emptyList<Film>()
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setFilmList(filmList: List<Film>) {
+        this.filmList = filmList
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularFilmsViewHolder {
         val binding = FilmItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,7 +27,7 @@ class PopularFilmsRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: PopularFilmsViewHolder, position: Int) {
         val film = filmList[position]
-        holder.bind(film)
+        holder.bind(film, clickListener)
     }
 
     override fun getItemCount(): Int = filmList.size
@@ -27,11 +35,15 @@ class PopularFilmsRecyclerViewAdapter(
     class PopularFilmsViewHolder(private val binding: FilmItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(film: Film) {
+        fun bind(film: Film, clickListener: (film: Film) -> Unit) {
             binding.textViewFilmTitle.text = film.title
             binding.textViewFilmGenreYear.text = "${film.genre}(${film.year})"
             binding.imageViewFavouriteIndicator.visibility = if (film.inFavourites) View.VISIBLE else View.GONE
+
+            binding.root.setOnClickListener { clickListener(film) }
         }
 
     }
+
+
 }
