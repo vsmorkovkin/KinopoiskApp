@@ -6,4 +6,6 @@
     <string name="fragment_favourite_films_label">Избранное</string>
     <string name="film_item_title_sample">Title</string>
     <string name="film_item_genre_year_sample">Genre(year)</string>
+    <string name="button_retry_text">Повторить</string>
+    <string name="no_connection_text">Произошла ошибка при загрузке данных, проверьте подключение к сети</string>
 </resources>

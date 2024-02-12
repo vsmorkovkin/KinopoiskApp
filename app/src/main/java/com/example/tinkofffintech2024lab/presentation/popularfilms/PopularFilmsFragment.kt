@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tinkofffintech2024lab.R
 import com.example.tinkofffintech2024lab.databinding.FragmentPopularFilmsBinding
+import com.example.tinkofffintech2024lab.utils.NetworkUtils
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -59,8 +60,14 @@ class PopularFilmsFragment : Fragment() {
                 }
             }
 
-            // fetch popular films
-            popularFilmsViewModel.getPopularFilms()
+            // Is the Internet available?
+            if (NetworkUtils.isNetworkAvailable(view.context)) {
+                // fetch popular films
+                popularFilmsViewModel.getPopularFilms()
+            } else {
+                // navigate to unavailableNetworkFragment
+                findNavController().navigate(R.id.action_popularFilmsFragment_to_unavailableNetworkFragment)
+            }
         }
 
     }

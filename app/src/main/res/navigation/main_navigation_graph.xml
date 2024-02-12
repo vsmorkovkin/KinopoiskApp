@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_popularFilmsFragment_to_filmDetailsFragment"
             app:destination="@id/filmDetailsFragment" />
+        <action
+            android:id="@+id/action_popularFilmsFragment_to_unavailableNetworkFragment"
+            app:destination="@id/unavailableNetworkFragment" />
     </fragment>
     <fragment
         android:id="@+id/favouriteFilmsFragment"
@@ -28,5 +31,10 @@
         android:name="com.example.tinkofffintech2024lab.presentation.filmdetails.FilmDetailsFragment"
         android:label="fragment_film_details"
         tools:layout="@layout/fragment_film_details" />
+    <fragment
+        android:id="@+id/unavailableNetworkFragment"
+        android:name="com.example.tinkofffintech2024lab.presentation.unavailablenetwork.UnavailableNetworkFragment"
+        android:label="fragment_unavailable_network"
+        tools:layout="@layout/fragment_unavailable_network" />
 
 </navigation>
