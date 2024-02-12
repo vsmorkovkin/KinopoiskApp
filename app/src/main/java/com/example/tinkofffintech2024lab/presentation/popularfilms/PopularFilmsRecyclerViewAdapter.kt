@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.domain.entity.Film
 import com.example.tinkofffintech2024lab.databinding.FilmItemBinding
 
 class PopularFilmsRecyclerViewAdapter(
-    private val clickListener: (film: Film) -> Unit
+    private val onClick: (film: Film) -> Unit,
+    private val onLongClick: (film: Film) -> Boolean
 ) : RecyclerView.Adapter<PopularFilmsRecyclerViewAdapter.PopularFilmsViewHolder>() {
 
     private var filmList = emptyList<Film>()
@@ -27,7 +29,7 @@ class PopularFilmsRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: PopularFilmsViewHolder, position: Int) {
         val film = filmList[position]
-        holder.bind(film, clickListener)
+        holder.bind(film, onClick, onLongClick, { notifyItemChanged(position) })
     }
 
     override fun getItemCount(): Int = filmList.size
@@ -35,12 +37,22 @@ class PopularFilmsRecyclerViewAdapter(
     class PopularFilmsViewHolder(private val binding: FilmItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(film: Film, clickListener: (film: Film) -> Unit) {
+        fun bind(film: Film, onClick: (film: Film) -> Unit, onLongClick: (film: Film) -> Boolean, onItemChanged: () -> Unit) {
             binding.textViewFilmTitle.text = film.title
-            binding.textViewFilmGenreYear.text = "${film.genre}(${film.year})"
+            binding.textViewFilmGenreYear.text = "${film.genre} (${film.year})"
             binding.imageViewFavouriteIndicator.visibility = if (film.inFavourites) View.VISIBLE else View.GONE
 
-            binding.root.setOnClickListener { clickListener(film) }
+            Glide.with(binding.root.context)
+                .load(film.imageUrl)
+                .into(binding.imageViewFilm)
+
+            binding.root.setOnClickListener { onClick(film) }
+            binding.root.setOnLongClickListener {
+                // onLongClick(film)
+                film.inFavourites = !film.inFavourites
+                onItemChanged()
+                true
+            }
         }
 
     }

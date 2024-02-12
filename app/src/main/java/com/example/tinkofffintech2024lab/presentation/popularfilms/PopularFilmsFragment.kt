@@ -33,9 +33,14 @@ class PopularFilmsFragment : Fragment() {
         binding.apply {
 
             // recyclerView settings
-            val adapter = PopularFilmsRecyclerViewAdapter {
-                findNavController().navigate(R.id.action_popularFilmsFragment_to_filmDetailsFragment)
-            }
+            val adapter = PopularFilmsRecyclerViewAdapter(
+                {
+                    findNavController().navigate(R.id.action_popularFilmsFragment_to_filmDetailsFragment)
+                },
+                {
+                    true
+                }
+            )
             recyclerViewPopularFilms.adapter = adapter
             val linearLayoutManager = LinearLayoutManager(this@PopularFilmsFragment.context)
             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL

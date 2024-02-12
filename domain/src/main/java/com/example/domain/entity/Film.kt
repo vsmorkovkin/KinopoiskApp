@@ -5,5 +5,6 @@ data class Film(
     val genre: String,
     val year: Int,
     val imageUrl: String,
-    val inFavourites: Boolean
-)
+) {
+    var inFavourites: Boolean = false
+}

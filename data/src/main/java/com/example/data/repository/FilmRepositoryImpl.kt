@@ -6,6 +6,7 @@ import com.example.domain.entity.Film
 import com.example.domain.entity.FilmDetails
 import com.example.domain.entity.SearchParam
 import com.example.domain.repository.FilmRepository
+import java.util.Locale
 
 class FilmRepositoryImpl(
     private val remoteFilmsDataSource: RemoteFilmsDataSource,
@@ -17,10 +18,13 @@ class FilmRepositoryImpl(
 
         return popularFilmsPage.films.map { filmApiModel ->  Film(
             title = filmApiModel.nameRu ?: filmApiModel.nameEn,
-            genre = filmApiModel.genres[0].genre,
+            genre = filmApiModel.genres[0].genre.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(
+                    Locale.ROOT
+                ) else it.toString()
+            },
             year = filmApiModel.year.toInt(),
-            imageUrl = "imageUrl",
-            inFavourites = false
+            imageUrl = filmApiModel.posterUrlPreview
         ) }
     }
 
