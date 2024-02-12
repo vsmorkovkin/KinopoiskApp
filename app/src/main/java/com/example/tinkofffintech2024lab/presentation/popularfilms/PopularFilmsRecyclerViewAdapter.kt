@@ -29,7 +29,7 @@ class PopularFilmsRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: PopularFilmsViewHolder, position: Int) {
         val film = filmList[position]
-        holder.bind(film, onClick, onLongClick, { notifyItemChanged(position) })
+        holder.bind(film, onClick, onLongClick, position, this::setToUpdatePosition )
     }
 
     override fun getItemCount(): Int = filmList.size
@@ -37,7 +37,13 @@ class PopularFilmsRecyclerViewAdapter(
     class PopularFilmsViewHolder(private val binding: FilmItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(film: Film, onClick: (film: Film) -> Unit, onLongClick: (film: Film) -> Boolean, onItemChanged: () -> Unit) {
+        fun bind(
+            film: Film,
+            onClick: (film: Film) -> Unit,
+            onLongClick: (film: Film) -> Boolean,
+            position: Int,
+            setToUpdatePosition: (position: Int) -> Unit
+        ) {
             binding.textViewFilmTitle.text = film.title
             binding.textViewFilmGenreYear.text = "${film.genre} (${film.year})"
             binding.imageViewFavouriteIndicator.visibility = if (film.inFavourites) View.VISIBLE else View.GONE
@@ -48,13 +54,23 @@ class PopularFilmsRecyclerViewAdapter(
 
             binding.root.setOnClickListener { onClick(film) }
             binding.root.setOnLongClickListener {
-                // onLongClick(film)
+                onLongClick(film)
                 film.inFavourites = !film.inFavourites
-                onItemChanged()
+                setToUpdatePosition(position)
                 true
             }
         }
 
+    }
+
+    private var toUpdatePosition = -1
+
+    private fun setToUpdatePosition(position: Int) {
+        toUpdatePosition = position
+    }
+
+    fun itemChanged() {
+        notifyItemChanged(toUpdatePosition)
     }
 
 

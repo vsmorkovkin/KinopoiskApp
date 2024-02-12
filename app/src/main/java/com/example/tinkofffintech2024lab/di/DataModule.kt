@@ -1,6 +1,9 @@
 package com.example.tinkofffintech2024lab.di
 
+import com.example.data.datasource.local.FilmDao
+import com.example.data.datasource.local.FilmDatabase
 import com.example.data.datasource.local.LocalFilmsDataSource
+import com.example.data.datasource.local.LocalFilmsDataSourceImpl
 import com.example.data.datasource.remote.FilmService
 import com.example.data.datasource.remote.RemoteFilmsDataSource
 import com.example.data.datasource.remote.RemoteFilmsDataSourceImpl
@@ -40,12 +43,18 @@ val dataModule = module {
         RemoteFilmsDataSourceImpl(filmService = get())
     }
 
+    single<FilmDao> {
+        FilmDatabase.getInstance(get()).filmDao
+    }
+
+    single<LocalFilmsDataSource> {
+        LocalFilmsDataSourceImpl(filmDao = get())
+    }
+
     single<FilmRepository> {
         FilmRepositoryImpl(
             remoteFilmsDataSource = get(),
-            localFilmsDataSource = object : LocalFilmsDataSource {
-                // todo implement localFilmsDataSource
-            }
+            localFilmsDataSource = get()
         )
     }
 

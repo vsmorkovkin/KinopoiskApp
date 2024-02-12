@@ -37,7 +37,8 @@ class PopularFilmsFragment : Fragment() {
                 {
                     findNavController().navigate(R.id.action_popularFilmsFragment_to_filmDetailsFragment)
                 },
-                {
+                { film ->
+                    popularFilmsViewModel.updateFilmFavouriteStatus(film)
                     true
                 }
             )
@@ -50,6 +51,12 @@ class PopularFilmsFragment : Fragment() {
             // set adapter's list when new list fetched
             popularFilmsViewModel.filmsList.observe(viewLifecycleOwner) { newList ->
                 adapter.setFilmList(newList)
+            }
+
+            popularFilmsViewModel.updatedFilmFavouriteStatus.observe(viewLifecycleOwner) { wasUpdated ->
+                if (wasUpdated) {
+                    adapter.itemChanged()
+                }
             }
 
             // fetch popular films

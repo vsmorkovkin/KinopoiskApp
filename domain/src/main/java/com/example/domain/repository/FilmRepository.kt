@@ -8,12 +8,12 @@ interface FilmRepository {
 
     suspend fun getPopularFilms(): List<Film>
 
-    fun updateFavouriteStatus(film: Film): Boolean
+    suspend fun updateFavouriteStatus(film: Film): Boolean
 
     fun getFilmInfo(film: Film): FilmDetails
 
     fun getFilmsByKeyword(searchParam: SearchParam): List<Film>
 
-    fun getFavouriteFilms(): List<Film>
+    suspend fun getFavouriteFilms(): List<Film>
 
 }

@@ -7,7 +7,7 @@ class UpdateFilmFavouriteStatusUseCase(
     private val filmRepository: FilmRepository
 ) {
 
-    fun execute(film: Film): Boolean {
+    suspend fun execute(film: Film): Boolean {
         return filmRepository.updateFavouriteStatus(film)
     }
 

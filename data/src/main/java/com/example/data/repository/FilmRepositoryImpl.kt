@@ -1,6 +1,7 @@
 package com.example.data.repository
 
 import com.example.data.datasource.local.LocalFilmsDataSource
+import com.example.data.datasource.local.model.FilmEntity
 import com.example.data.datasource.remote.RemoteFilmsDataSource
 import com.example.domain.entity.Film
 import com.example.domain.entity.FilmDetails
@@ -16,20 +17,26 @@ class FilmRepositoryImpl(
     override suspend fun getPopularFilms(): List<Film> {
         val popularFilmsPage = remoteFilmsDataSource.getPopularFilms()
 
-        return popularFilmsPage.films.map { filmApiModel ->  Film(
-            title = filmApiModel.nameRu ?: filmApiModel.nameEn,
-            genre = filmApiModel.genres[0].genre.replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(
-                    Locale.ROOT
-                ) else it.toString()
-            },
-            year = filmApiModel.year.toInt(),
-            imageUrl = filmApiModel.posterUrlPreview
-        ) }
+        return popularFilmsPage.films.map { filmApiModel ->
+            val film = Film(
+                id = filmApiModel.filmId,
+                title = filmApiModel.nameRu ?: filmApiModel.nameEn,
+                genre = filmApiModel.genres[0].genre.replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(
+                        Locale.ROOT
+                    ) else it.toString()
+                },
+                year = filmApiModel.year.toInt(),
+                imageUrl = filmApiModel.posterUrlPreview
+            )
+            film.inFavourites = localFilmsDataSource.getFilmFavouriteStatus(film).status
+            film
+        }
     }
 
-    override fun updateFavouriteStatus(film: Film): Boolean {
-        TODO("Not yet implemented")
+    override suspend fun updateFavouriteStatus(film: Film): Boolean {
+        localFilmsDataSource.updateFilmFavouriteStatus(film)
+        return true
     }
 
     override fun getFilmInfo(film: Film): FilmDetails {
@@ -40,7 +47,17 @@ class FilmRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override fun getFavouriteFilms(): List<Film> {
-        TODO("Not yet implemented")
+    override suspend fun getFavouriteFilms(): List<Film> {
+        return localFilmsDataSource.getFavouriteFilms().map { filmEntity: FilmEntity ->
+            val film = Film(
+                id = filmEntity.filmId,
+                title = filmEntity.title,
+                genre = filmEntity.genre,
+                year = filmEntity.year,
+                imageUrl = filmEntity.imageUrl
+            )
+            film.inFavourites = true
+            film
+        }
     }
 }
